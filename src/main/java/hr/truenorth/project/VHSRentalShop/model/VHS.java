@@ -11,8 +11,6 @@ import java.sql.Time;
 @Setter
 @NoArgsConstructor
 @Table(name="VHS")
-@EqualsAndHashCode
-@ToString
 public class VHS {
 
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -20,7 +18,7 @@ public class VHS {
     @Column(name="id")
     private long id;
 
-    @NotNull
+    @NotNull(message = "{VHS.name.not.empty}")
     @Column(name="name")
     private String name;
 
@@ -35,5 +33,37 @@ public class VHS {
         this.name = name;
         this.duration = duration;
         this.yearPublished = year;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        VHS vhs = (VHS) o;
+
+        if (id != vhs.id) return false;
+        if (yearPublished != vhs.yearPublished) return false;
+        if (!name.equals(vhs.name)) return false;
+        return duration.equals(vhs.duration);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + name.hashCode();
+        result = 31 * result + duration.hashCode();
+        result = 31 * result + yearPublished;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "VHS{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", duration=" + duration +
+                ", yearPublished=" + yearPublished +
+                '}';
     }
 }

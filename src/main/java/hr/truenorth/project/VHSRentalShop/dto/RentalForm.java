@@ -10,11 +10,11 @@ import java.util.Date;
 @Data
 public class RentalForm {
 
-    @NotNull(message = "{idVHS.not.empty}")
+    @NotNull(message = "{idVHS.not.null}")
     private Long idVHS;
-    @NotNull(message = "{username.not.empty}")
+    @NotNull(message = "{username.not.null}")
     private String username;
-    @NotNull(message = "{rentalDate.not.empty}")
+    @NotNull(message = "{rentalDate.not.null}")
     private Date rentalDate;
 
     public RentalForm(Long idVHS, String username, Date rentalDate) {

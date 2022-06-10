@@ -6,6 +6,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.Optional;
 
 public interface UserService {
-    ResponseEntity<Object> createUser(User user);
+    User createUser(User user);
     Optional<User> findUser(String username);
 }

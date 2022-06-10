@@ -19,18 +19,18 @@ import java.util.Date;
 public class Rental {
 
     @ManyToOne
-    @NotNull(message = "{idVHS.not.empty}")
+    @NotNull(message = "{idVHS.not.null}")
     @JoinColumn(name="idVHS")
     @Id
     private VHS idVHS;
 
     @Column(name="rentalDate")
-    @NotNull(message = "{rentalDate.not.empty}")
+    @NotNull(message = "{rentalDate.not.null}")
     @Id
     private Date rentalDate;
 
     @ManyToOne
-    @NotNull(message = "{user.not.empty}")
+    @NotNull(message = "{user.not.null}")
     @JoinColumn(name = "username")
     private User user;
 
@@ -43,14 +43,19 @@ public class Rental {
     @Column(name="isReturned")
     private boolean isReturned;
 
-    public Rental(VHS idVHS, Date rentalDate, User user, Date dueDate, int fee,boolean isReturned) {
+    @Column(name="additionalFee")
+    private Float additionalFee;
+
+    public Rental(VHS idVHS, Date rentalDate, User user, Date dueDate, int fee, boolean isReturned, Float additionalFee) {
         this.idVHS = idVHS;
         this.rentalDate = rentalDate;
         this.user = user;
         this.dueDate = dueDate;
         this.fee = fee;
         this.isReturned = isReturned;
+        this.additionalFee = additionalFee;
     }
+
 
 }
 

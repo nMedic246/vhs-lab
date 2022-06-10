@@ -16,8 +16,6 @@ import hr.truenorth.project.VHSRentalShop.repository.VHSRepository;
 import hr.truenorth.project.VHSRentalShop.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -47,7 +45,7 @@ public class RentalServiceJPA implements RentalService {
     private float rate;
 
     @Override
-    public ResponseEntity<Object> rentVHS(RentalForm rental) {
+    public Rental rentVHS(RentalForm rental) {
 
         if(!userRepository.existsById(rental.getUsername())){
             throw new UserNotFoundException("User with the given username does not exist!");
@@ -59,12 +57,11 @@ public class RentalServiceJPA implements RentalService {
         VHS vhs = vhsRepository.findById(rental.getIdVHS()).get();
 
         if(rentalRepository.existsById(new RentalId(rental.getRentalDate(),rental.getIdVHS()))){
-            throw new MultipleRentalsException(vhs.getName()+" was already rented today!");
+            throw new MultipleRentalsException(vhs.getName()+" was already rented on that day!");
         }
         Date dueDate = calculateDueDate(rental.getRentalDate());
-        Rental newRental = new Rental(vhs,rental.getRentalDate(),user,dueDate,fee,false);
-        rentalRepository.save(newRental);
-        return ResponseEntity.status(HttpStatus.OK).body("New rental successfully added!");
+        Rental newRental = new Rental(vhs,rental.getRentalDate(),user,dueDate,fee,false,null);
+        return rentalRepository.save(newRental);
     }
 
     @Override
@@ -73,20 +70,19 @@ public class RentalServiceJPA implements RentalService {
     }
 
     @Override
-    public ResponseEntity<Object> returnVHS(ReturnForm returnForm) {
+    public Rental returnVHS(ReturnForm returnForm) {
         Rental checkRental = rentalRepository.findByIdVHSIdAndUserUsername(returnForm.getIdVHS(),returnForm.getUsername());
         if(checkRental==null){
             throw new RentalNotFoundException("The given rental was not found.");
         }
 
         checkRental.setReturned(true);
-        rentalRepository.save(checkRental);
+
         if(lateReturnCheck(returnForm.getReturnDate(),checkRental.getDueDate())){
             float additionalFee = calculateFee(checkRental.getDueDate(),returnForm.getReturnDate());
-            return ResponseEntity.status(HttpStatus.OK).body("VHS returned after the due date, you owe us "+ additionalFee+" kuna!");
-        }else{
-            return ResponseEntity.status(HttpStatus.OK).body("VHS returned before the due date, nothing to pay!");
+            checkRental.setAdditionalFee(additionalFee);
         }
+        return rentalRepository.save(checkRental);
     }
 
     private Date calculateDueDate(Date dateRented){

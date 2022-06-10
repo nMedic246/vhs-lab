@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface VHSService {
-    ResponseEntity<Object> createVHS(VHS vhs);
+    VHS createVHS(VHS vhs);
     List<VHS> getAll();
     Optional<VHS> findVHS(long id);
+    VHS updateVHS(VHS vhs);
+    Long deleteVHS(long id);
 }

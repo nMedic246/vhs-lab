@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface RentalService {
-    ResponseEntity<Object> rentVHS(RentalForm rental);
+    Rental rentVHS(RentalForm rental);
     List<Rental> getAllRentals();
-    ResponseEntity<Object> returnVHS(ReturnForm returnForm);
+    Rental returnVHS(ReturnForm returnForm);
 
 }
