@@ -26,10 +26,14 @@ public class User {
     @Column(name="password")
     private String password;
 
-    public User(String username, String name, String surname, String password) {
+    @Column(name="role")
+    private String role;
+
+    public User(String username, String name, String surname, String password, String role) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.password = password;
+        this.role = role;
     }
 }

@@ -22,8 +22,8 @@ public class DataInitializer {
 
    @EventListener
     public void appReady(ApplicationReadyEvent event) {
-        createVHS();
-        createUsers();
+       //createVHS();
+        //createUsers();
     }
 
     private void createVHS(){
@@ -35,12 +35,12 @@ public class DataInitializer {
         vhsService.createVHS(newVHS);
     }
 
-    private void createUsers(){
-       User newUser = new User("nika123","nika","medic","qwertz");
+    /*private void createUsers(){
+       User newUser = new User("nika123","nika","medic","qwertz","ROLE_ADMIN");
        userService.createUser(newUser);
-       newUser = new User("jonny123","John","Doe","johhnyboi");
+       newUser = new User("jonny123","John","Doe","johhnyboi","ROLE_USER");
        userService.createUser(newUser);
-       newUser = new User("yozo","Jozo","Jurišić","qwertz");
+       newUser = new User("yozo","Jozo","Jurišić","qwertz","ROLE_USER");
        userService.createUser(newUser);
-    }
+    }*/
 }

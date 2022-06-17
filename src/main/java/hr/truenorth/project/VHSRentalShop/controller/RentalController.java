@@ -7,6 +7,7 @@ import hr.truenorth.project.VHSRentalShop.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,19 +15,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rental")
+@PreAuthorize("hasRole('ADMIN')")
 public class RentalController {
 
     @Autowired
     RentalService rentalService;
 
     @PostMapping("/rentVHS")
-    private ResponseEntity<Object> addRental(@RequestBody @Valid RentalForm rentalForm){
+    public ResponseEntity<Object> addVHS(@RequestBody @Valid RentalForm rentalForm){
         rentalService.rentVHS(rentalForm);
         return ResponseEntity.status(HttpStatus.OK).body("New rental successfully added!");
     }
 
     @PostMapping("/returnVHS")
-    private ResponseEntity<Object> returnVHS(@RequestBody @Valid ReturnForm returnForm){
+    public ResponseEntity<Object> returnVHS(@RequestBody @Valid ReturnForm returnForm){
         Rental returnedRental = rentalService.returnVHS(returnForm);
         if(returnedRental.getAdditionalFee() != null){
             return ResponseEntity.status(HttpStatus.OK).body("VHS returned after the due date, you owe us "+ returnedRental.getAdditionalFee()+" kuna!");
@@ -35,7 +37,7 @@ public class RentalController {
     }
 
     @GetMapping("/list")
-    private List<Rental> getAllRentals(){
+    public List<Rental> getAllRentals(){
         return rentalService.getAllRentals();
     }
 }

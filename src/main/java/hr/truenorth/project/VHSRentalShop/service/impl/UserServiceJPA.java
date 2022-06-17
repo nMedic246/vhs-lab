@@ -6,6 +6,7 @@ import hr.truenorth.project.VHSRentalShop.repository.UserRepository;
 import hr.truenorth.project.VHSRentalShop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,7 +24,7 @@ public class UserServiceJPA implements UserService {
         if(userRepository.existsById(user.getUsername())){
             throw new UserAlreadyExistsException("User with username "+user.getUsername()+" already exists.");
         }
-        //user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         return userRepository.save(user);
     }
 

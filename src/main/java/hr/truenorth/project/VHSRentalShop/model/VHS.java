@@ -13,7 +13,7 @@ import java.sql.Time;
 @Table(name="VHS")
 public class VHS {
 
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
     @Column(name="id")
     private long id;
@@ -25,7 +25,7 @@ public class VHS {
     @Column(name="duration")
     private Time duration;
 
-    @Column(name="yearPublished")
+    @Column(name="year_published")
     private int yearPublished;
 
 
