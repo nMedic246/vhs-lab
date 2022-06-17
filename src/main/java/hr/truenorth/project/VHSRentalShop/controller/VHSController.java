@@ -40,7 +40,7 @@ public class VHSController {
         log.info("Post request on /api/vhs/addVHS");
         System.out.println("Default rental duration is "+duration+"days.");
         VHS newVHS = vhsService.createVHS(vhs);
-        return ResponseEntity.status(HttpStatus.OK).body("New VHS successfully added, the id is "+newVHS.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body("New VHS successfully added, the id is "+newVHS.getId());
     }
 
     @PutMapping("/updateVHS")

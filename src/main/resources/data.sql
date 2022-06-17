@@ -8,4 +8,4 @@ INSERT INTO VHS (name,duration,year_published) VALUES
     ('Se7en','02:07:00',1995),
     ('Mean girls','01:37:00',2004);
 
-INSERT INTO rental (idVHS,rental_date,username,fee,is_returned) VALUES (1,'2017-04-18','nika123',20,false);
+INSERT INTO rental (idVHS,rental_date,username,fee,is_returned) VALUES (1,'2017-04-18 00:00:00','nika123',20,false);

@@ -1,6 +1,5 @@
 package hr.truenorth.project.VHSRentalShop.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import hr.truenorth.project.VHSRentalShop.model.id.RentalId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
