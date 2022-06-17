@@ -14,6 +14,7 @@ import hr.truenorth.project.VHSRentalShop.repository.RentalRepository;
 import hr.truenorth.project.VHSRentalShop.repository.UserRepository;
 import hr.truenorth.project.VHSRentalShop.repository.VHSRepository;
 import hr.truenorth.project.VHSRentalShop.service.RentalService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@Slf4j
 public class RentalServiceJPA implements RentalService {
 
     @Autowired
@@ -48,15 +50,18 @@ public class RentalServiceJPA implements RentalService {
     public Rental rentVHS(RentalForm rental) {
 
         if(!userRepository.existsById(rental.getUsername())){
+            log.error("User with the given username does not exist!");
             throw new UserNotFoundException("User with the given username does not exist!");
         }
         User user = userRepository.findById(rental.getUsername()).get();
         if(!vhsRepository.existsById(rental.getIdVHS())){
+            log.error("VHS with the given id does not exist!");
             throw new VHSNotFoundException("VHS with the given id does not exist!");
         }
         VHS vhs = vhsRepository.findById(rental.getIdVHS()).get();
 
         if(rentalRepository.existsById(new RentalId(rental.getRentalDate(),rental.getIdVHS()))){
+            log.error(vhs.getName()+" was already rented on that day!");
             throw new MultipleRentalsException(vhs.getName()+" was already rented on that day!");
         }
         Date dueDate = calculateDueDate(rental.getRentalDate());
@@ -73,22 +78,27 @@ public class RentalServiceJPA implements RentalService {
     public Rental returnVHS(ReturnForm returnForm) {
         Rental checkRental = rentalRepository.findByIdVHSIdAndUserUsername(returnForm.getIdVHS(),returnForm.getUsername());
         if(checkRental==null){
+            log.error("The given rental was not found.");
             throw new RentalNotFoundException("The given rental was not found.");
         }
 
         checkRental.setReturned(true);
 
         if(lateReturnCheck(returnForm.getReturnDate(),checkRental.getDueDate())){
+            log.info("VHS was returned past the due date.");
             float additionalFee = calculateFee(checkRental.getDueDate(),returnForm.getReturnDate());
+            log.info("Additional fee is "+additionalFee);
             checkRental.setAdditionalFee(additionalFee);
         }
         return rentalRepository.save(checkRental);
     }
 
     private Date calculateDueDate(Date dateRented){
+        log.info("Calculating due date....");
         Calendar c= Calendar.getInstance();
         c.setTime(dateRented);
         c.add(Calendar.DATE, duration);
+        log.info("Due date is "+c.getTime());
         return c.getTime();
     }
 
@@ -97,6 +107,7 @@ public class RentalServiceJPA implements RentalService {
     }
 
     private float calculateFee(Date dueDate,Date returnDate){
+        log.info("Calculating aditional fee...");
         long diff = returnDate.getTime() - dueDate.getTime();
         int days =(int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         return fee*(1+rate*days)-fee;

@@ -4,6 +4,7 @@ import hr.truenorth.project.VHSRentalShop.exception.VHSNotFoundException;
 import hr.truenorth.project.VHSRentalShop.model.VHS;
 import hr.truenorth.project.VHSRentalShop.repository.VHSRepository;
 import hr.truenorth.project.VHSRentalShop.service.VHSService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @Service
 @Qualifier("VHSServiceJPA")
+@Slf4j
 public class VHSServiceJPA implements VHSService{
 
     @Autowired
@@ -36,6 +38,7 @@ public class VHSServiceJPA implements VHSService{
     @Override
     public VHS updateVHS(VHS vhs) {
         if(!vhsRepository.existsById(vhs.getId())){
+            log.error("VHS with the given id does not exist!");
             throw new VHSNotFoundException("VHS with the given id does not exist!");
         }
         return vhsRepository.save(vhs);
@@ -44,6 +47,7 @@ public class VHSServiceJPA implements VHSService{
     @Override
     public Long deleteVHS(long id) {
         if(!vhsRepository.existsById(id)){
+            log.error("VHS with the given id does not exist!");
             throw new VHSNotFoundException("VHS with the given id does not exist!");
         }
         vhsRepository.deleteById(id);

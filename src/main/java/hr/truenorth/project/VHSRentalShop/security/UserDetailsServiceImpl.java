@@ -2,7 +2,6 @@ package hr.truenorth.project.VHSRentalShop.security;
 
 import hr.truenorth.project.VHSRentalShop.model.User;
 import hr.truenorth.project.VHSRentalShop.repository.UserRepository;
-import hr.truenorth.project.VHSRentalShop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.lang.management.GarbageCollectorMXBean;
 import java.util.LinkedList;
 import java.util.List;
 
