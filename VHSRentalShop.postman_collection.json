@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "4b85f23a-94a3-4046-bf12-df78924b9d63",
+		"name": "VHSRentalShop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14018990"
+	},
+	"item": [
+		{
+			"name": "Get VHS list",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "qwertz",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "yozo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8888/api/vhs/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"vhs",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get VHS with id 2",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "qwertz",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "yozo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8888/api/vhs/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"vhs",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User yozo rents VHS with id 3",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "qwertz",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "nika123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idVHS\":3,\r\n    \"username\":\"yozo\",\r\n    \"rentalDate\":\"2017-04-18\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8888/api/rental/rentVHS",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"rental",
+						"rentVHS"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User jonny123 rents VHS with id 1",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "qwertz",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "nika123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idVHS\":1,\r\n    \"username\":\"jonny123\",\r\n    \"rentalDate\":\"2017-04-20\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8888/api/rental/rentVHS",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"rental",
+						"rentVHS"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User yozo returns VHS before the due date",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "qwertz",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "nika123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idVHS\":3,\r\n    \"username\":\"yozo\",\r\n    \"returnDate\":\"2017-04-20\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8888/api/rental/returnVHS",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"rental",
+						"returnVHS"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User johnny returns VHS after the due date",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "qwertz",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "nika123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idVHS\":1,\r\n    \"username\":\"jonny123\",\r\n    \"returnDate\":\"2017-06-23\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8888/api/rental/returnVHS",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"rental",
+						"returnVHS"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get rental list",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "qwertz",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "nika123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8888/api/rental/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"rental",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User yozo logs out",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "yozo",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "qwertz",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8888/api/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
